@@ -1,5 +1,5 @@
-defmodule DiscussWeb.ErrorHTML do
-  use DiscussWeb, :html
+defmodule Discuss.Web.ErrorHTML do
+  use Discuss.Web, :html
 
   # If you want to customize your error pages,
   # uncomment the embed_templates/1 call below

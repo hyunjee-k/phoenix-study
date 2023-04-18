@@ -9,7 +9,7 @@ defmodule Discuss.Application do
   def start(_type, _args) do
     children = [
       # Start the Telemetry supervisor
-      DiscussWeb.Telemetry,
+      Discuss.Web.Telemetry,
       # Start the Ecto repository
       Discuss.Repo,
       # Start the PubSub system
@@ -17,7 +17,7 @@ defmodule Discuss.Application do
       # Start Finch
       {Finch, name: Discuss.Finch},
       # Start the Endpoint (http/https)
-      DiscussWeb.Endpoint
+      Discuss.Web.Endpoint
       # Start a worker by calling: Discuss.Worker.start_link(arg)
       # {Discuss.Worker, arg}
     ]
@@ -32,7 +32,7 @@ defmodule Discuss.Application do
   # whenever the application is updated.
   @impl true
   def config_change(changed, _new, removed) do
-    DiscussWeb.Endpoint.config_change(changed, removed)
+    Discuss.Web.Endpoint.config_change(changed, removed)
     :ok
   end
 end

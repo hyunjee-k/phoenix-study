@@ -15,7 +15,7 @@ config :discuss, Discuss.Repo,
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :discuss, DiscussWeb.Endpoint,
+config :discuss, Discuss.Web.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "UCoGT1VSyiGrfjk/7dI97cLAo0LXdSKWDCQxdOuMN8f/zXSvgAvdhAYilH0vBQ2d",
   server: false

@@ -1,12 +1,14 @@
-defmodule DiscussWeb do
+defmodule Discuss.Web do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, components, channels, and so on.
 
   This can be used in your application as:
 
-      use DiscussWeb, :controller
-      use DiscussWeb, :html
+      use Discuss.Web, :controller
+      use Discuss.Web, :html
+      use Discuss.Web, :model
+      use Discuss.Web, :view
 
   The definitions below will be executed for every controller,
   component, etc, so keep them short and clean, focused
@@ -36,14 +38,39 @@ defmodule DiscussWeb do
     end
   end
 
+  def view do
+    quote do
+      use Phoenix.HTML
+      use Phoenix.View,
+        root: "lib/web/components",
+        namespace: Discuss.Web
+
+      # Import convenience functions from controllers
+      import Phoenix.Controller,
+             only: [get_csrf_token: 0, view_module: 1, view_template: 1]
+      import Discuss.Router.Helpers
+      import Discuss.ErrorHelpers
+      import Discuss.Gettext
+    end
+  end
+
+  def model do
+    quote do
+      use Ecto.Schema
+      import Ecto
+      import Ecto.Changeset
+      import Ecto.Query
+    end
+  end
+
   def controller do
     quote do
       use Phoenix.Controller,
         formats: [:html, :json],
-        layouts: [html: DiscussWeb.Layouts]
+        layouts: [html: Discuss.Web.Layouts]
 
       import Plug.Conn
-      import DiscussWeb.Gettext
+      import Discuss.Web.Gettext
 
       unquote(verified_routes())
     end
@@ -52,7 +79,7 @@ defmodule DiscussWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {DiscussWeb.Layouts, :app}
+        layout: {Discuss.Web.Layouts, :app}
 
       unquote(html_helpers())
     end
@@ -84,8 +111,8 @@ defmodule DiscussWeb do
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components and translation
-      import DiscussWeb.CoreComponents
-      import DiscussWeb.Gettext
+      import Discuss.Web.CoreComponents
+      import Discuss.Web.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
@@ -98,9 +125,9 @@ defmodule DiscussWeb do
   def verified_routes do
     quote do
       use Phoenix.VerifiedRoutes,
-        endpoint: DiscussWeb.Endpoint,
-        router: DiscussWeb.Router,
-        statics: DiscussWeb.static_paths()
+        endpoint: Discuss.Web.Endpoint,
+        router: Discuss.Web.Router,
+        statics: Discuss.Web.static_paths()
     end
   end
 
