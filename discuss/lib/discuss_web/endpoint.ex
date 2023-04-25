@@ -1,4 +1,4 @@
-defmodule Discuss.Web.Endpoint do
+defmodule DiscussWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :discuss
 
   # The session will be stored in the cookie and signed,
@@ -21,7 +21,7 @@ defmodule Discuss.Web.Endpoint do
     at: "/",
     from: :discuss,
     gzip: false,
-    only: Discuss.Web.static_paths()
+    only: DiscussWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -47,5 +47,5 @@ defmodule Discuss.Web.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug Discuss.Web.Router
+  plug DiscussWeb.Router
 end

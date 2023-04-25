@@ -1,4 +1,4 @@
-defmodule Discuss.Web.ErrorJSON do
+defmodule DiscussWeb.ErrorJSON do
   # If you want to customize a particular status code,
   # you may add your own clauses, such as:
   #

@@ -1,12 +1,12 @@
-defmodule Discuss.Web.ErrorHTML do
-  use Discuss.Web, :html
+defmodule DiscussWeb.ErrorHTML do
+  use DiscussWeb, :html
 
   # If you want to customize your error pages,
   # uncomment the embed_templates/1 call below
   # and add pages to the error directory:
   #
-  #   * lib/discuss_web/controllers/error_html/404.html.heex
-  #   * lib/discuss_web/controllers/error_html/500.html.heex
+  #   * lib/DiscussWeb/controllers/error_html/404.html.heex
+  #   * lib/DiscussWeb/controllers/error_html/500.html.heex
   #
   # embed_templates "error_html/*"
 

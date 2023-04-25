@@ -1,11 +1,11 @@
-defmodule Discuss.Web.Router do
-  use Discuss.Web, :router
+defmodule DiscussWeb.Router do
+  use DiscussWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, {Discuss.Web.Layouts, :root}
+    plug :put_root_layout, {DiscussWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -14,16 +14,16 @@ defmodule Discuss.Web.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", Discuss.Web do
+  scope "/", DiscussWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/", TopicController, :index
     get "/topics/new", TopicController, :new
     post "/topics", TopicController, :create
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", Discuss.Web do
+  # scope "/api", DiscussWeb do
   #   pipe_through :api
   # end
 
@@ -39,7 +39,7 @@ defmodule Discuss.Web.Router do
     scope "/dev" do
       pipe_through :browser
 
-      live_dashboard "/dashboard", metrics: Discuss.Web.Telemetry
+      live_dashboard "/dashboard", metrics: DiscussWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
   end

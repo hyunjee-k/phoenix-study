@@ -1,4 +1,4 @@
-defmodule Discuss.Web.CoreComponents do
+defmodule DiscussWeb.CoreComponents do
   @moduledoc """
   Provides core UI components.
 
@@ -17,7 +17,7 @@ defmodule Discuss.Web.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
-  import Discuss.Web.Gettext
+  import DiscussWeb.Gettext
 
   @doc """
   Renders a modal.
@@ -625,9 +625,9 @@ defmodule Discuss.Web.CoreComponents do
     # with our gettext backend as first argument. Translations are
     # available in the errors.po file (as we use the "errors" domain).
     if count = opts[:count] do
-      Gettext.dngettext(Discuss.Web.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(DiscussWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(Discuss.Web.Gettext, "errors", msg, opts)
+      Gettext.dgettext(DiscussWeb.Gettext, "errors", msg, opts)
     end
   end
 

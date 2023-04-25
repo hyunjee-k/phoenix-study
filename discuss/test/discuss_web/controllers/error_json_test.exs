@@ -1,12 +1,12 @@
-defmodule Discuss.Web.ErrorJSONTest do
-  use Discuss.Web.ConnCase, async: true
+defmodule DiscussWeb.ErrorJSONTest do
+  use DiscussWeb.ConnCase, async: true
 
   test "renders 404" do
-    assert Discuss.Web.ErrorJSON.render("404.json", %{}) == %{errors: %{detail: "Not Found"}}
+    assert DiscussWeb.ErrorJSON.render("404.json", %{}) == %{errors: %{detail: "Not Found"}}
   end
 
   test "renders 500" do
-    assert Discuss.Web.ErrorJSON.render("500.json", %{}) ==
+    assert DiscussWeb.ErrorJSON.render("500.json", %{}) ==
              %{errors: %{detail: "Internal Server Error"}}
   end
 end

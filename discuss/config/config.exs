@@ -11,10 +11,10 @@ config :discuss,
   ecto_repos: [Discuss.Repo]
 
 # Configures the endpoint
-config :discuss, Discuss.Web.Endpoint,
+config :discuss, DiscussWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [
-    formats: [html: Discuss.Web.ErrorHTML, json: Discuss.Web.ErrorJSON],
+    formats: [html: DiscussWeb.ErrorHTML, json: DiscussWeb.ErrorJSON],
     layout: false
   ],
   pubsub_server: Discuss.PubSub,
