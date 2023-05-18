@@ -14,12 +14,23 @@ defmodule DiscussWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", DiscussWeb do
+#  scope "/", DiscussWeb do
+#    pipe_through :browser
+#
+#    get "/", TopicController, :index
+#    get "/topics", TopicController, :index
+#    get "/topics/new", TopicController, :new
+#    get "/topics/:id", TopicController, :show
+#    post "/topics", TopicController, :create
+#    get "/topics/:id/edit", TopicController, :edit
+#    put "/topics/:id", TopicController, :update
+#  end
+
+# 위의 것을 짧게 줄여서 아래 처럼 작성 가능
+  scope "/topics", DiscussWeb do
     pipe_through :browser
 
-    get "/", TopicController, :index
-    get "/topics/new", TopicController, :new
-    post "/topics", TopicController, :create
+    resources "/", TopicController
   end
 
   # Other scopes may use custom stacks.

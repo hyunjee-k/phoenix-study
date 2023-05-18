@@ -10,6 +10,11 @@ defmodule DiscussWeb.TopicController do
     render(conn, :index, topics: topics)
   end
 
+  def show(conn, %{"id" => topic_id}) do
+    topic = Repo.get!(Topic, topic_id)
+    render(conn, :show, topic: topic)
+  end
+
   def new(conn, _params) do
     changeset = Topic.changeset(%Topic{}, %{})
     render(conn, :new, changeset: changeset)
@@ -30,6 +35,36 @@ defmodule DiscussWeb.TopicController do
       {:error, changeset} ->
         render(conn, :new, changeset: changeset)
     end
+  end
+
+  def edit(conn, %{"id" => topic_id}) do
+    topic = Repo.get(Topic, topic_id)
+    changeset = Topic.changeset(topic)
+    render(conn, :edit, topic: topic, changeset: changeset)
+  end
+
+  def update(conn, %{"id" => topic_id, "topic" => topic}) do
+    old_topic = Repo.get(Topic, topic_id)
+    changeset = Topic.changeset(old_topic, topic)
+
+    case Repo.update(changeset) do
+      {:ok, _topic} ->
+        conn
+        |> put_flash(:info, "Topic, Updated")
+        |> redirect(to: ~p"/topics/#{topic_id}")
+
+      {:error, changeset} ->
+        render(conn, :edit, changeset: changeset, topic: old_topic)
+    end
+  end
+
+  def delete(conn, %{"id" => topic_id}) do
+    Repo.get!(Topic, topic_id) |> Repo.delete!()
+    # ! 를 사용하면 존재하지 않을 경우 사용할 수 없다는 에러를 발생시킵니다.
+
+    conn
+    |> put_flash(:info, "Topic Deleted!")
+    |> redirect(to: ~p"/topics")
   end
 
 end
