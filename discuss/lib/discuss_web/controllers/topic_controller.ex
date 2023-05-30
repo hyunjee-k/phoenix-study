@@ -1,6 +1,5 @@
 defmodule DiscussWeb.TopicController do
   use DiscussWeb, :controller
-  import Ecto
 
   alias Discuss.Repo
   alias Discuss.Discussions.Topic

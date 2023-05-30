@@ -6,7 +6,36 @@ defmodule DiscussWeb.AuthController do
   alias Discuss.Accounts.User
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
+    user_params = %{
+      email: auth.info.email,
+      provider: "github",
+      token: auth.credentials.token
+    }
+    changeset = User.changeset(%User{}, user_params)
 
+    signin(conn, changeset)
   end
 
+  # defp: private function
+  defp signin(conn, changeset) do
+    case insert_or_update_user(changeset) do
+      {:ok, user} ->
+        conn
+        |> put_flash(:info, "Welcome back!")
+        |> put_session(:user_id, user.id)
+        |> redirect(to: ~p"/topics")
+      {:error, _reason} ->
+        conn
+        |> put_flash(:error, "Unable to sign in")
+        |> redirect(to: ~p"/topics")
+    end
+  end
+
+  # defp: private function
+  defp insert_or_update_user(changeset) do
+    case Repo.get_by(User, email: changeset.changes.email) do
+      nil -> Repo.insert(changeset)
+      user -> {:ok, user} # Repo.update(changeset)
+    end
+  end
 end
