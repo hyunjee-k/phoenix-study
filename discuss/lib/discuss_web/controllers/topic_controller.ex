@@ -1,10 +1,15 @@
 defmodule DiscussWeb.TopicController do
   use DiscussWeb, :controller
+  import Ecto
 
   alias Discuss.Repo
   alias Discuss.Discussions.Topic
 
+  plug(DiscussWeb.Plugs.RequireAuth when action in [:new, :create, :edit, :update, :delete])
+  plug(:check_topic_owner when action in [:update, :edit, :delete]) # function plug
+
   def index(conn, _params) do
+#    IO.inspects(conn.assigns)
     topics = Repo.all(Topic)
     render(conn, :index, topics: topics)
   end
@@ -20,7 +25,11 @@ defmodule DiscussWeb.TopicController do
   end
 
   def create(conn, %{"topic" => topic}) do
-    changeset = Topic.changeset(%Topic{}, topic)
+#    changeset = Topic.changeset(%Topic{}, topic)
+
+    changeset = conn.assigns[:user]
+      |> build_assoc(:topics)
+      |> Topic.changeset(topic)
 
     case Repo.insert(changeset) do
       # if post OK, redirect to index
@@ -66,4 +75,16 @@ defmodule DiscussWeb.TopicController do
     |> redirect(to: ~p"/topics")
   end
 
+  def check_topic_owner(conn, _params) do
+    %{params: %{"id" => topic_id}} = conn
+    # fetch topic out of db IF user_id == to current user let through -> conn
+    if Repo.get(Topic, topic_id).user_id == conn.assigns.user.id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You are not allowed to edit this topic")
+      |> redirect(to: ~p"/topics")
+      |> halt()
+    end
+  end
 end

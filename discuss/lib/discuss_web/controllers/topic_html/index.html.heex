@@ -15,10 +15,14 @@
     </div>
   </:action>
   <:action :let={topic}>
-    <.link class="btn" navigate={~p"/topics/#{topic}/edit"}>Edit</.link>
-    <.link class="btn" href={~p"/topics/#{topic}"} method="delete" data-confirm="Are you sure?">
-      Delete
-    </.link>
+    <%= if @conn.assigns.user && @conn.assigns.user.id == topic.user_id do %>
+        <.link class="btn" navigate={~p"/topics/#{topic}/edit"}>
+           Edit
+        </.link>
+        <.link class="btn" href={~p"/topics/#{topic}"} method="delete" data-confirm="Are you sure?">
+          Delete
+        </.link>
+    <% end %>
   </:action>
 </.table>
 <%!-- <.div>

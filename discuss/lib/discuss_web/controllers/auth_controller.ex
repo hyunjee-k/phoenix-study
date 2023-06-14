@@ -7,9 +7,9 @@ defmodule DiscussWeb.AuthController do
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     user_params = %{
+      token: auth.credentials.token,
       email: auth.info.email,
-      provider: "github",
-      token: auth.credentials.token
+      provider: "github"
     }
     changeset = User.changeset(%User{}, user_params)
 
@@ -29,6 +29,12 @@ defmodule DiscussWeb.AuthController do
         |> put_flash(:error, "Unable to sign in")
         |> redirect(to: ~p"/topics")
     end
+  end
+
+  def signout(conn, _params) do
+    conn
+    |> configure_session(drop: true)
+    |> redirect(to: ~p"/topics")
   end
 
   # defp: private function

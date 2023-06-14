@@ -6,10 +6,10 @@ defmodule Discuss.Discussions.Topic do
 
   schema "topics" do
     field :title, :string
-#    belongs_to :user, Discuss.Accounts.User
+    belongs_to :user, Discuss.Accounts.User # this is the relationship
 #    has_many :comments, Discuss.Discussions.Comment
 #
-#    timestamps()
+    timestamps()
   end
 
   # validation
